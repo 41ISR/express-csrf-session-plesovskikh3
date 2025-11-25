@@ -10,7 +10,7 @@ const app = express()
 app.use(cookieParser())
 app.use(express.json())
 app.use(cors({
-    origin: "*",
+    origin: "https://shiny-broccoli-7r4gg65p9gr2xxr6-5173.app.github.dev/",
     credentials: false,
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: ["Content-Type"]
@@ -23,7 +23,7 @@ app.use(session({
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
         sameSite: "lax",
-        
+        secure: true
     }
 }))
 

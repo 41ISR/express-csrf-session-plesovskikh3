@@ -25,6 +25,7 @@ app.use(session({
     cookie: {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
+        name: "sessionId",
         // sameSite: "strict",
         sameSite: "none", // ТОЛЬКО ДЛЯ CODESPACES
         secure: true, // false если localhost
@@ -32,7 +33,16 @@ app.use(session({
     }
 }))
 
-app.post("/signup", (req, res) => {
+app.get("/auth/me", (req, res) => {
+    console.log(req.session)
+    if (req.session.userId) {
+        return res.status(200).json({logged: true})
+    }
+
+    return res.status(401).json({logged: false})
+})
+
+app.post("/auth/signup", (req, res) => {
     try {
         const hashed = bcrypt.hashSync(req.body.password, 10)
         const newUser = db
@@ -48,8 +58,29 @@ app.post("/signup", (req, res) => {
         res.status(201).json(createdUser)
     } catch (error) {
         console.error(error)
-        res.json(error)
+        res.status(400).json(error)
     }
+})
+
+app.post("/auth/signup", (req, res) => {
+    const { email, password } = req.body
+    const user = db
+        .prepare(`SELECT * FROM users WHERE email = ?`)
+        .get(email)
+    if (!user) 
+        res
+            .status(401)
+            .json({ error: "Неправильные данные" })
+    const validPassword = bcrypt.compareSync(password, user.password)
+    if (!validPassword) 
+        res
+            .status(401)
+            .json({ error: "Неправильные данные" })
+
+    req.session.email = user.email
+    req.session.userId = user.id
+
+    res.status(200).json(user)
 })
 
 app.listen("3000", () => {

@@ -86,6 +86,18 @@ app.post("/auth/signin", (req, res) => {
     res.status(200).json(user)
 })
 
+app.post("/auth/logout", (req, res) => {
+    req.session.destroy((err) => {
+        err && res.status(500).json({error: "Не получилось выйти"})
+        res.clearCookie("sessionId")
+        res.status(200).json({message: "Выход успешен"})
+    })
+})
+
+// 1. Кинуть юзера на /logout
+// 2. Там в useEffect сделать запрос на /auth/logout и очистить
+// user в authStore
+
 app.listen("3000", () => {
     console.log("Порт3000")
 })

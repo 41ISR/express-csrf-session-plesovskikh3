@@ -70,31 +70,7 @@ const Index = () => {
                     </form>
                 </div>
 
-                <div className="leaderboard">
-                    <h2>🏆 Топ-10 игроков</h2>
-                    <ol>
-                        <li>
-                            <span className="rank">#1</span>
-                            <span className="username">bob</span>
-                            <span className="score">200 кликов</span>
-                        </li>
-                        <li>
-                            <span className="rank">#2</span>
-                            <span className="username">alice</span>
-                            <span className="score">150 кликов</span>
-                        </li>
-                        <li className="current-user">
-                            <span className="rank">#3</span>
-                            <span className="username">you</span>
-                            <span className="score">42 клика</span>
-                        </li>
-                        <li>
-                            <span className="rank">#4</span>
-                            <span className="username">charlie</span>
-                            <span className="score">75 кликов</span>
-                        </li>
-                    </ol>
-                </div>
+                
 
             </div>
         </div>

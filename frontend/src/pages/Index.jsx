@@ -14,13 +14,16 @@ const Index = () => {
         const interval = setInterval(() => {
             formRef.current && handleSubmit()
         }, 5000)
-
         return () => {clearInterval(interval)}
     }, [])
+
     useEffect(() => {
         clickRef.current = clicks
     }, [clicks])
 
+    useEffect(() => {
+        setClicks(user.user.clicks)
+    }, [user])
     const handleClick = () => {
         setClicks((val) => val + 1)
     }

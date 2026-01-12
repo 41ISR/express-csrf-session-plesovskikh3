@@ -10,9 +10,11 @@ export const useAuthStore = create((set, get) => ({
 
             if (!res.ok) throw new Error(res.error)
 
-            if (!res.body) return
+            const data = await res.json()
 
-            set((state) => ({ ...state, user: res.body }))
+            if (!data) return
+
+            set((state) => ({ ...state, user: data }))
         } catch (error) {
             console.error(error)
         }

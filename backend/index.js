@@ -39,7 +39,7 @@ app.get("/auth/me", (req, res) => {
         return res.status(200).json({logged: true, user: {
             userId: req.session.userId,
             email: req.session.email,
-            clicks: req.session.clicks
+            clicks: req.session.clicks || 0
         }})
     }
 
